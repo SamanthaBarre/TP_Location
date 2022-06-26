@@ -1,0 +1,29 @@
+{% extends 'back-office.html.twig' %}
+
+{% block title %}Commandes
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center">
+		{{ id ? "Modifier la commande numéro " ~ id : "Créer une nouvelle commande"}}
+	</h1>
+
+	{% for message in app.flashes("message")%}
+		<div class="alert alert-danger">
+			{{ message}}
+		</div>
+	{% endfor %}
+	{% for vehicule in app.flashes("vehicules")%}
+		<div class="alert alert-info">
+			<div>Liste des véhicules disponibles sur le créneau demandé</div>
+
+			<ul>
+				{% for v in vehicule.disponibles %}
+					<li> {{ v.titre }} </li>
+                    {% else %}
+                    <li>Aucun véhicule en stock sur cette période</li>
+				{% endfor %}
+			</ul>
+		</div>
+	{% endfor %}
+	{{ form(form) }}{% endblock %}

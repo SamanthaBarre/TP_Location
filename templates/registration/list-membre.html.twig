@@ -1,0 +1,41 @@
+{% extends "back-office.html.twig" %}
+
+{% block titre %}Liste des membres {% endblock %}
+
+{% block body %}
+<main class="row">
+    <h1 class="text-center">Liste des membres</h1>
+       <table class="table table-dark m-5">
+  <thead>
+    <tr class="text-center">
+        <th style="width:5%">id</th>
+         <th style="width:5%">Pseudo</th>
+         <th style="width:15%">Prenom</th>
+         <th style="width:10%">Nom</th>
+         <th style="width:10%">Civilité</th>
+         <th style="width:10%">Email</th>
+         <th style="width:15%">Role</th>
+         <th style="width:15%">Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+    <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.pseudo }}</td>
+          <td>{{ user.prenom }}</td>
+          <td>{{ user.nom }}</td>
+          <td>{{ user.civilite | civilite | raw}}</td>
+          <td>{{ user.email }}</td> 
+          <td> {{ user.roles | role }} </td>
+          {# <td> {{ user.roles | join(",") }} </td> #}
+    
+
+      <td> 
+    {% include "commun/actions.html.twig" with {"id" : user.id, "update" : "list_update", "delete" : "list_delete" } %}
+           
+       </td>   
+    </tr>
+    {% endfor %}
+</main>
+{% endblock %}

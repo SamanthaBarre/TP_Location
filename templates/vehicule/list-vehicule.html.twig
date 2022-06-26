@@ -1,0 +1,42 @@
+{% extends "back-office.html.twig" %}
+
+{% block titre %}Liste des véhicules {% endblock %}
+
+{% block body %}
+<main class="row">
+    <h1 class="text-center">Liste des véhicules</h1>
+       <table class="table table-dark m-5">
+  <thead>
+    <tr class="text-center">
+         <th style="width:5%">Véhicule</th>
+         <th style="width:15%">Titre</th>
+         <th style="width:10%">Marque</th>
+         <th style="width:10%">Modele</th>
+         <th style="width:15%">Description</th>
+          <th style="width:10%">Photo</th>
+         <th style="width:5%">Prix</th>
+         <th style="width:15%">Options</th>
+               
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for vehicule in vehicules %}
+    <tr>
+          <td>{{ vehicule.id }}</td> 
+          <td>{{ vehicule.titre }}</td>
+          <td>{{ vehicule.marque }}</td>
+          <td>{{ vehicule.modele }}</td>
+          <td>{{ vehicule.description }}</td>
+          <td> <img src="/upload{{ asset(vehicule.photo) }}" alt="" class="img-fluid" width="150 px"> </td> 
+          <td> {{ vehicule.prixJournalier | deviseFr }} </td>
+
+          
+      <td> 
+        {% include "commun/actions.html.twig" with {"id" : vehicule.id, "update" : "update_vehicule", "delete" : "delete_vehicule" } %}
+            {# tableau path à écrire en twig => json { "clé" : "valeur", "id" : categorie.id} #}
+       </td>   
+    </tr>
+    {% endfor %}
+</main>
+{% endblock %}

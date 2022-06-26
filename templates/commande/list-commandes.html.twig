@@ -1,0 +1,40 @@
+{% extends "back-office.html.twig" %}
+
+{% block titre %}Liste des commandes {% endblock %}
+
+{% block body %}
+<main class="row">
+    <h1 class="text-center">Liste des commandes</h1>
+       <table class="table table-dark m-5">
+  <thead>
+    <tr class="text-center">
+        <th style="width:5%">Numéro de commande</th>
+         <th style="width:10%">Véhicule</th>
+         <th style="width:20%">Utilisateur</th>
+         <th style="width:10%">Date de départ</th>
+         <th style="width:10%">Date de retour</th>
+         <th style="width:10%">Prix total</th>
+         <th style="width:10%">Date d'enregistrement</th>
+         <th style="width:20%">Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for commande in commandes %}
+    <tr>
+         <td class="text-center">{{ commande.id }}</td>
+         <td class="text-center">{{ commande.vehicule.id }} - {{ commande.vehicule.titre }}</td> 
+          <td class="text-center">{{ commande.user.id }} - {{ commande.user.pseudo }}</td>
+          <td class="text-center">{{ commande.dtHeureDepart | date("d/m/Y H:i:s")  }}</td>
+          <td class="text-center">{{ commande.dtHeureFin | date("d/m/Y H:i:s") }}</td> 
+          <td class="text-center"> {{commande.prixTotal | deviseFr }} </td>   
+          <td class="text-center">{{ commande.dtEnregistrement | date("d/m/Y H:i:s") }}</td> 
+    
+
+      <td> 
+    {% include "commun/actions.html.twig" with {"id" : commande.id, "update" : "commande_update", "delete" : "commande_delete" } %}
+            
+       </td>   
+    </tr>
+    {% endfor %}
+</main>
+{% endblock %}
